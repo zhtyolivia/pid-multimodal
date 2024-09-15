@@ -5,6 +5,17 @@
 
 You can download the four multimodal medical datasets used in this study [here](https://drive.google.com/drive/folders/13aZ5mFqh6dB-SVbxolOGTLOcxzYssZmx?usp=sharing). To compute PID metrics and run the models, place the datasets in the `datasets` directory. The CSV files include the features and outcomes, and the JSON files contain the data splits used for repeated cross-validation. 
 
+The file structure is then:
+```
+  ├── datasets/               
+  │   ├── lung_radiopathomic/ 
+  │   ├── prostate_t2w_adc/   
+  │   ├── ...   
+  ├── linear_models 
+  │   ├── ...
+  ├── ...         
+```
+
 ## Calculate PID-based metrics 
 We adapted the implementation of PID-based metrics for quantifying multimodal interactions from Liang et al. See the [original repository](https://github.com/pliang279/PID/tree/1f6e9d09598754f0dcf7d4ce7e7ffe1c377b0035) for further details. 
 
