@@ -1,0 +1,9 @@
+# Ignore Python bytecode files and cache
+__pycache__/
+*.py[cod]
+
+# Ignore nonlinear models experiment data
+nonlinear_models/exp/
+
+# Ignore datasets directory
+datasets/
