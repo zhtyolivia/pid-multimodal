@@ -6,4 +6,7 @@ __pycache__/
 nonlinear_models/exp/
 
 # Ignore datasets directory
-datasets/
+datasets/brain_radiogenomic
+datasets/lung_radiogenomic
+datasets/prostate_t2w_adc
+datasets/lung_radiopathomic 
