@@ -55,7 +55,7 @@ We implemented the linear cox models using R. To run those models:
 
 After installing R and RStudio, lauch RStudio and navigate to the `pid-multimodal/linear_models` directory.
 
-In RStudio, run the script in `concat_lung_radiopathomic.R` to run the concatenation-fused model on the lung radiopathomci dataset. The script will install necessary packages and run the model with repeated cross-validation. Similarly, you can run the canonical correlation analysis (CCA)-fused model, unimodal models, and the ensemble model on this dataset with the other three R scripts in the `pid-multimodal/linear_models` directory. 
+In RStudio, run the script in `concat_lung_radiopathomic.R` to run the concatenation-fused model on the lung radiopathomic dataset. The script will install necessary packages and run the model with repeated cross-validation. Similarly, you can run the canonical correlation analysis (CCA)-fused model, unimodal models, and the ensemble model on this dataset with the other three R scripts in the `pid-multimodal/linear_models` directory. 
 
 ## Non-linear models 
 
@@ -92,3 +92,5 @@ Finally, to run unimodal models (e.g., the radiomic-only model):
 ```
 CUDA_VISIBLE_DEVICES=0 unimodal.py -- dataset lung_radiopathomic --modality radiomic
 ```
+
+The same scripts can be used to run the nonlinear models on the other three datasets by specifying dataset name and model hyperparameters. 
