@@ -43,7 +43,19 @@ python calculate_pid.py --dataset lung_radiopathomic --pca-components 2 --k 3
 
 ## Linear models 
 
-We implemented linear cox proportional hazards model using R. The R scripts are under ```./linear_models```. To run those scripts, 
+### Installing R and required packages 
+
+We implemented the linear cox models using R. To run those models: 
+
+* Install R: https://www.r-project.org/
+
+* Also, install RStudio: https://posit.co/download/rstudio-desktop/
+
+### Running linear models 
+
+After installing R and RStudio, lauch RStudio and navigate to the `pid-multimodal/linear_models` directory.
+
+In RStudio, run the script in `concat_lung_radiopathomic.R` to run the concatenation model on the lung radiopathomci dataset. Similarly, you can run the CCA model, unimodal models, and the ensemble models on this dataset with the other three R scripts in the `pid-multimodal/linear_models` directory. The scripts will install necessary packages and run the models. 
 
 ## Non-linear models 
 
