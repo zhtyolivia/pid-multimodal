@@ -1,9 +1,9 @@
 # Quantifying multimodal interactions in multimodal medical data
 
 
-## Datasets 
+## Data preparation 
 
-The `./dataset` directory contains the four multimodal medical datasets that we used for this study. The csv files contain the features and outcomes, and the json files contain the data splits we used for repeated cross-validation. See `./datasets/README.md` for details.
+You can download the four multimodal medical datasets used in this study [here](https://drive.google.com/drive/folders/13aZ5mFqh6dB-SVbxolOGTLOcxzYssZmx?usp=sharing). To compute PID metrics and run the models, place the datasets in the `datasets` directory. The CSV files include the features and outcomes, and the JSON files contain the data splits used for repeated cross-validation. 
 
 ## Calculate PID-based metrics 
 We adapted the implementation of PID-based metrics for quantifying multimodal interactions from Liang et al. See the [original repository](https://github.com/pliang279/PID/tree/1f6e9d09598754f0dcf7d4ce7e7ffe1c377b0035) for further details. 
@@ -52,20 +52,20 @@ chmod +x install_pkgs.sh
 
 Next, to perform early fusion on the lung radiopathomic dataset, run: 
 ```
-python early_fusion.py --dataset lung_radiopathomic 
+CUDA_VISIBLE_DEVICES=0 python early_fusion.py --dataset lung_radiopathomic 
 ```
 
 Similarly, for tensor fusion: 
 ```
-python tensor_fusion.py --dataset lung_radiopathomic 
+CUDA_VISIBLE_DEVICES=0 python tensor_fusion.py --dataset lung_radiopathomic 
 ```
 
 Also, to run the ensemble model: 
 ```
-python ensemble.py --dataset lung_radiopathomic 
+CUDA_VISIBLE_DEVICES=0 python ensemble.py --dataset lung_radiopathomic 
 ```
 
 Finally, to run unimodal models (e.g., the radiomic-only model): 
 ```
-unimodal.py -- dataset lung_radiopathomic --modality radiomic
+CUDA_VISIBLE_DEVICES=0 unimodal.py -- dataset lung_radiopathomic --modality radiomic
 ```
