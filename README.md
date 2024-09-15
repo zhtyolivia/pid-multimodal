@@ -3,21 +3,23 @@
 
 ## Data preparation 
 
-You can download the four multimodal medical datasets used in this study [here](https://drive.google.com/drive/folders/13aZ5mFqh6dB-SVbxolOGTLOcxzYssZmx?usp=sharing). To compute PID metrics and run the models, place the datasets in the `datasets` directory. The CSV files include the features and outcomes, and the JSON files contain the data splits used for repeated cross-validation. 
+You can download the four multimodal medical datasets used in this study [here](https://drive.google.com/drive/folders/13aZ5mFqh6dB-SVbxolOGTLOcxzYssZmx?usp=sharing). The CSV files include the features and outcomes, and the JSON files contain the data splits used for repeated cross-validation. 
 
-The file structure is then:
+To compute PID metrics and run the models, place the datasets in the `datasets` directory. The file structure is then:
 ```
   ├── datasets/               
   │   ├── lung_radiopathomic/ 
   │   ├── prostate_t2w_adc/   
   │   ├── ...   
   ├── linear_models 
+  │   ├── ...   
+  ├── nonlinear_models 
   │   ├── ...
   ├── ...         
 ```
 
 ## Calculate PID-based metrics 
-We adapted the implementation of PID-based metrics for quantifying multimodal interactions from Liang et al. The `PID` directory contains their implementation of PID-based metrics. See the [original repository](https://github.com/pliang279/PID/tree/1f6e9d09598754f0dcf7d4ce7e7ffe1c377b0035) for further details. 
+We adapted the implementation of PID-based metrics for quantifying multimodal interactions from Liang et al. See the [this repository](https://github.com/pliang279/PID/tree/1f6e9d09598754f0dcf7d4ce7e7ffe1c377b0035) for further details. 
 
 ### Installing required packages 
 
@@ -28,7 +30,7 @@ docker run  --shm-size=2g --gpus all -it --rm -v /:/workspace -v /etc/localtime:
 
 See [this link](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch/tags) for additional information on this docker image. 
 
-Next, navigate to `pid-multimodal/pid_calculation` and install required packages by running the following commands:
+Next, navigate to `pid_calculation` and install required packages:
 ```
 pip install -r pid_requirement.txt
 ```
@@ -53,11 +55,11 @@ We implemented the linear cox models using R. To run those models:
 
 ### Running linear models 
 
-After installing R and RStudio, lauch RStudio and navigate to the `pid-multimodal/linear_models` directory.
+After installing R and RStudio, lauch RStudio and navigate to the `linear_models` directory.
 
-In RStudio, run the script in `concat_lung_radiopathomic.R` to run the concatenation-fused model on the lung radiopathomic dataset. The script will install necessary packages and run the model with repeated cross-validation. Similarly, you can run the canonical correlation analysis (CCA)-fused model, unimodal models, and the ensemble model on this dataset with the other three R scripts in the `pid-multimodal/linear_models` directory. 
+In RStudio, run the script in `concat_lung_radiopathomic.R` to run the concatenation-fused model on the lung radiopathomic dataset. The script will install necessary packages and run the model with repeated cross-validation. Similarly, you can run the canonical correlation analysis (CCA)-fused model, unimodal models, and the ensemble model on this dataset with the other three R scripts in the `linear_models` directory. 
 
-## Non-linear models 
+## Nonlinear models 
 
 ### Installing required  packages
 Same as for calculating PID metrics, create a docker container:
@@ -65,7 +67,7 @@ Same as for calculating PID metrics, create a docker container:
 docker run  --shm-size=2g --gpus all -it --rm -v /:/workspace -v /etc/localtime:/etc/localtime:ro nvcr.io/nvidia/pytorch:21.12-py3
 ```
 
-Then, navigate to `pid-multimodal/nonlinear_models` and run the following commands to install necessary packages: 
+Then, navigate to `nonlinear_models` and run the following commands to install necessary packages: 
 ```
 chmod +x install_pkgs.sh
 ./install_pkgs.sh
