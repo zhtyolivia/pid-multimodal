@@ -17,7 +17,7 @@ The file structure is then:
 ```
 
 ## Calculate PID-based metrics 
-We adapted the implementation of PID-based metrics for quantifying multimodal interactions from Liang et al. See the [original repository](https://github.com/pliang279/PID/tree/1f6e9d09598754f0dcf7d4ce7e7ffe1c377b0035) for further details. 
+We adapted the implementation of PID-based metrics for quantifying multimodal interactions from Liang et al. The `PID` directory contains their implementation of PID-based metrics. See the [original repository](https://github.com/pliang279/PID/tree/1f6e9d09598754f0dcf7d4ce7e7ffe1c377b0035) for further details. 
 
 ### Installing required packages 
 
@@ -35,7 +35,7 @@ pip install -r pid_requirement.txt
 
 ### Calculating PID matrics
 
-Then, calculate PID metrics using the ```calculate_pid.py``` script. For example, to calculate PID metrics on the lung_radiopathomic dataset, 
+Then, calculate PID metrics using the ```calculate_pid.py``` script by specifying the dataset name, number of PCA componetns, and the number of clusters. For example, to calculate PID metrics on the lung_radiopathomic dataset, 
 
 ```
 python calculate_pid.py --dataset lung_radiopathomic --pca-components 2 --k 3
@@ -55,7 +55,7 @@ We implemented the linear cox models using R. To run those models:
 
 After installing R and RStudio, lauch RStudio and navigate to the `pid-multimodal/linear_models` directory.
 
-In RStudio, run the script in `concat_lung_radiopathomic.R` to run the concatenation model on the lung radiopathomci dataset. Similarly, you can run the CCA model, unimodal models, and the ensemble models on this dataset with the other three R scripts in the `pid-multimodal/linear_models` directory. The scripts will install necessary packages and run the models. 
+In RStudio, run the script in `concat_lung_radiopathomic.R` to run the concatenation-fused model on the lung radiopathomci dataset. The script will install necessary packages and run the model with repeated cross-validation. Similarly, you can run the canonical correlation analysis (CCA)-fused model, unimodal models, and the ensemble model on this dataset with the other three R scripts in the `pid-multimodal/linear_models` directory. 
 
 ## Non-linear models 
 
