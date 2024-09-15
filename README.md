@@ -21,7 +21,7 @@ We adapted the implementation of PID-based metrics for quantifying multimodal in
 
 ### Installing required packages 
 
-First, create a pytorch docker container with the following command:
+To calculate PID metrics, first create a pytorch docker container with the following command:
 ```
 docker run  --shm-size=2g --gpus all -it --rm -v /:/workspace -v /etc/localtime:/etc/localtime:ro nvcr.io/nvidia/pytorch:21.12-py3
 ```
@@ -35,7 +35,7 @@ pip install -r pid_requirement.txt
 
 ### Calculating PID matrics
 
-Then, calculate PID metrics using the ```calculate_pid.py``` script by specifying the dataset name, number of PCA componetns, and the number of clusters. For example, to calculate PID metrics on the lung_radiopathomic dataset, 
+Now, you can calculate PID metrics using the ```calculate_pid.py``` script by specifying the dataset name, number of PCA componetns, and the number of clusters. For example, to calculate PID metrics on the lung_radiopathomic dataset, 
 
 ```
 python calculate_pid.py --dataset lung_radiopathomic --pca-components 2 --k 3
