@@ -35,9 +35,9 @@ Next, navigate to `pid_calculation` and install required packages with this comm
 pip install -r pid_requirement.txt
 ```
 
-### Step 2: Calculating PID matrics
+### Step 2: Calculating PID metrics
 
-Now, you can calculate PID metrics using the ```calculate_pid.py``` script by specifying the dataset name, number of PCA componetns, and the number of clusters. For example, to calculate PID metrics on the lung_radiopathomic dataset, 
+Now, you can calculate PID metrics using the ```calculate_pid.py``` script by specifying the dataset name, number of PCA components, and the number of clusters. For example, to calculate PID metrics on the lung_radiopathomic dataset, 
 
 ```
 python calculate_pid.py --dataset lung_radiopathomic --pca-components 2 --k 3
@@ -55,7 +55,7 @@ We implemented the linear cox models using R. To run those models:
 
 ### Step 2: Running linear models 
 
-After installing R and RStudio, lauch RStudio and navigate to the `linear_models` directory.
+After installing R and RStudio, launch RStudio and navigate to the `linear_models` directory.
 
 In RStudio, run the script in `concat_lung_radiopathomic.R` to run the concatenation-fused model on the lung radiopathomic dataset. The script will install necessary packages and run the model with repeated cross-validation. Similarly, you can run the canonical correlation analysis (CCA)-fused model, unimodal models, and the ensemble model on this dataset with the other three R scripts in the `linear_models` directory. 
 
@@ -92,7 +92,7 @@ CUDA_VISIBLE_DEVICES=0 python ensemble.py --dataset lung_radiopathomic
 
 Finally, to run unimodal models (e.g., the radiomic-only model): 
 ```
-CUDA_VISIBLE_DEVICES=0 unimodal.py -- dataset lung_radiopathomic --modality radiomic
+CUDA_VISIBLE_DEVICES=0 unimodal.py --dataset lung_radiopathomic --modality radiomic
 ```
 
 The same scripts can be used to run the nonlinear models on the other three datasets by specifying dataset name and model hyperparameters. 

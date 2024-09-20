@@ -33,6 +33,7 @@ parser.add_argument("--hidden-dim", default=64, type=int)
 parser.add_argument("--epochs", default=30, type=int)
 parser.add_argument("--lr", default=1e-4, type=float)
 parser.add_argument("--weight-decay", default=1e-5, type=float)
+parser.add_argument("--no-concat-one", action="store_false", dest="concat_1", help="Concatenate 1 to input features of tensor fusion")
 parser.add_argument("--no-early-stop", action="store_false", dest="early_stop", help="Disable early stopping (default is enabled)")
 parser.add_argument("--no-dropout", action="store_false", dest="dropout", help="Disable dropout (default is enabled)")
 parser.add_argument("--dropout-rate", default=0.3, type=float)
@@ -61,16 +62,14 @@ for rep in range(num_rep):
         train_loader, val_loader, test_loader = create_dataloaders(
             x1, x2, surv_time, surv_status, cv_splits, rep=rep, fold=fold, batch_size=args.bs, device=device)
 
-        # Specify the early-fusion model 
+        # Specify the early-fusion model: encoders, fusion, and head 
         input_dims = [x1.shape[1], x2.shape[1]]
-        if rep == 0 and fold == 0: 
-            print(input_dims)
-        # encoders = [Linear(input_dim, args.out_dim).to(device) for input_dim in input_dims]
         encoders = [MLP(input_dim, 128, args.out_dim, dropout=args.dropout, dropoutp=args.dropout_rate).to(device) for input_dim in input_dims]
-        # encoders = [MLP(x1.shape[1], 128, args.out_dim, dropout=args.dropout, dropoutp=args.dropout_rate).to(device), Identity().to(device)]
-        outdim = np.prod(np.array([args.out_dim] * 2)+ 1)
-        # outdim = (args.out_dim + 1) * (x2.shape[1] + 1)
-        fusion = TensorFusion(concat_1=True)
+        if args.concat_1: 
+            outdim = np.prod(np.array([args.out_dim] * 2)+ 1)
+        else:
+            outdim = np.prod(np.array([args.out_dim] * 2))
+        fusion = TensorFusion(concat_1=args.concat_1)
         head = MLP(outdim, args.hidden_dim, outdim=1, dropout=args.dropout, dropoutp=args.dropout_rate).to(device) 
         
         train_c_index, val_c_index, test_c_index = train(
