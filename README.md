@@ -1,5 +1,8 @@
 # Quantifying multimodal interactions in multimodal medical data
 
+This repository contains the code and datasets used in our paper "Quantifying multimodal interactions in multimodal medical data." Each component in the pipeline figure below is implemented in this repository. Detailed instructions for downloading the data, setting up the environment, and running each component are provided below.
+
+![pipeline](figures/pipeline.png)
 
 ## Data preparation 
 
