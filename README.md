@@ -1,6 +1,6 @@
 # Quantifying multimodal interactions in multimodal medical data
 
-This repository contains the code and datasets used in our paper "Quantifying multimodal interactions in multimodal medical data." Each component in the pipeline figure below is implemented in this repository. Detailed instructions for downloading the data, setting up the environment, and running each component are provided below.
+There has been an increasing interest in combining different modalities such as radiology, pathology, genomic, and clinical data to improve the accuracy and robustness of diagnosis and prognosis in medicine. However, most existing works choose their datasets and modeling approaches empirically and in an ad hoc manner. Four partial information decomposition (PID)-based metrics have been shown to provide a theoretical and systematic understanding of multimodal data interactions in machine learning settings: redundancy between two modalities, uniqueness of each modality, and synergy that emerges when the fused modalities induce new information. However, these metrics have only been evaluated in a limited range of biomedical data, and the existing work did not elucidate the effect of different parameterizations in calculating the PID. In this work, we further assess the PID metrics using four different multimodal radiology cohorts in lung, prostate, and brain cancers. We found that, though promising, the PID metrics were not always consistent with the machine learning model performance and only one dataset had perfect consistency. We identified potential sources of inconsistency and provided suggestions for future works.
 
 ![pipeline](figures/pipeline.png)
 
@@ -70,10 +70,9 @@ Same as for calculating PID metrics, create a docker container:
 docker run  --shm-size=2g --gpus all -it --rm -v /:/workspace -v /etc/localtime:/etc/localtime:ro nvcr.io/nvidia/pytorch:21.12-py3
 ```
 
-Then, navigate to `nonlinear_models` and run the following commands to install necessary packages: 
+Then, navigate to `nonlinear_models` and intall the [lifelines package](https://lifelines.readthedocs.io/en/latest/): 
 ```
-chmod +x install_pkgs.sh
-./install_pkgs.sh
+pip install lifelines 
 ```
 
 ### Step 2: Running nonlinear models 
