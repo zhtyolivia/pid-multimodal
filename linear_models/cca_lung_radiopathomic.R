@@ -326,7 +326,7 @@ for  (rep in 1:num_rep_cv) {
     c_index_val = results_val[[1]]
     fold_val_results[[(rep-1)*num_folds + fold]] <- c_index_val
     
-    # ===== validation =====
+    # ===== test =====
     results_test = run_inference(model_fit, X_test_df, test_outcome)
     c_index_val = results_test[[1]]
     fold_test_results[[(rep-1)*num_folds + fold]] <- c_index_val

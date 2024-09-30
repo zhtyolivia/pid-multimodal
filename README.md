@@ -65,7 +65,7 @@ In RStudio, run the script in `concat_lung_radiopathomic.R` to run the concatena
 ## Nonlinear models 
 
 ### Step 1: Installing required  packages
-Same as for calculating PID metrics, create a docker container:
+Similar to calculating PID metrics, create a docker container:
 ```
 docker run  --shm-size=2g --gpus all -it --rm -v /:/workspace -v /etc/localtime:/etc/localtime:ro nvcr.io/nvidia/pytorch:21.12-py3
 ```
