@@ -65,29 +65,7 @@ run_inference = function(model, X, y, lasso_lambda) {
   X_val = as.matrix(X)
   risk_scores_val = predict(model_fit, newx = X_val, s = lasso_lambda)
   c_index_val = apply(risk_scores_val, 2, Cindex, y=y_val)
-  
-  risk_groups_val = as.factor(case_when(
-    risk_scores_val >= risk_threshold ~ "High-risk",
-    risk_scores_val < risk_threshold ~ "Low-risk",
-  ))
-  
-  risk_groups_val_numeric = as.factor(case_when(
-    risk_groups_val == c('High-risk') ~ 1,
-    risk_groups_val == c('Low-risk') ~ 0,
-  ))
-  
-  time_val = y$time
-  status_val = y$status
-  coxph_data_val = as.data.frame(cbind(time_val, status_val, risk_scores_val))
-  
-  confusionMatrix(data=risk_groups_val_numeric, reference = as.factor(status_val), positive = '1')
-  
-  # Sort features indicated by LASSO feature weight absolute value
-  sorted_features_indices = sort.int(abs(lasso_selected_feature_beta), decreasing = TRUE, index.return = TRUE)$ix
-  sorted_features_weights = round(sort.int(abs(lasso_selected_feature_beta), decreasing = TRUE, index.return = TRUE)$x, digits = 2)
-  selected_features = colnames(X_val[, lasso_selected_feature_indices[sorted_features_indices]])
-  selected_features_and_weights = cbind(selected_features, sorted_features_weights)
-  return (list(c_index_val, selected_features_and_weights))
+  return (list(c_index_val))
 }
 
 normalize_and_fill_na = function(train_features, val_features, test_features) {
@@ -150,6 +128,12 @@ best_lambda = 1
 lasso_lambda <- best_lambda
 print(lasso_lambda)
 
+# initialize a list to store the results from each fold
+fold_train_results <- vector("list", num_rep_cv*num_folds)
+fold_val_results <- vector("list", num_rep_cv*num_folds)
+fold_test_results <- vector("list", num_rep_cv*num_folds)
+selected_feature_counts <- vector("list", num_rep_cv*num_folds)
+
 for (rep in 1:num_rep_cv){
   cat("rep =", rep, "\n")
   set.seed(rep)
@@ -206,8 +190,6 @@ for (rep in 1:num_rep_cv){
     c_index_train = apply(risk_scores_train, 2, Cindex, y = y_train) # Calculate concordance index using the risk scores
     num_progression_train = sum(train_outcome[, c('status')] == 1)
     
-    coxph_data_train = as.data.frame(cbind(time_train, status_train, risk_scores_train))
-    
     fold_train_results[[(rep-1)*num_folds + fold]] = c_index_train
     
     # ===== validation =====
@@ -240,6 +222,3 @@ fold_test_results <- unlist(fold_test_results)
 result_mean = round(mean(fold_test_results), 4)
 result_sd = round(sd(fold_test_results), 4)
 print(paste(result_mean, "±", result_sd))
-
-
-
