@@ -70,14 +70,14 @@ Same as for calculating PID metrics, create a docker container:
 docker run  --shm-size=2g --gpus all -it --rm -v /:/workspace -v /etc/localtime:/etc/localtime:ro nvcr.io/nvidia/pytorch:21.12-py3
 ```
 
-Then, navigate to `nonlinear_models` and intall the [lifelines package](https://lifelines.readthedocs.io/en/latest/): 
+Then, intall the [lifelines package](https://lifelines.readthedocs.io/en/latest/): 
 ```
 pip install lifelines 
 ```
 
 ### Step 2: Running nonlinear models 
 
-Next, to perform early fusion on the lung radiopathomic dataset, run: 
+Next, to perform early fusion on the lung radiopathomic dataset, navigate to `nonlinear_models` and run: 
 ```
 CUDA_VISIBLE_DEVICES=0 python early_fusion.py --dataset lung_radiopathomic 
 ```
