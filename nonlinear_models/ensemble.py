@@ -2,9 +2,6 @@ import torch
 import torch.nn as nn
 import numpy as np
 import argparse
-import time
-import logging
-import gzip
 from datetime import datetime
 import os, sys
 sys.path.append(os.getcwd())

@@ -2,9 +2,6 @@ import torch
 import torch.nn as nn
 import numpy as np
 import argparse
-import time
-import logging
-import gzip
 from datetime import datetime
 import os, sys
 sys.path.append(os.getcwd())
@@ -13,8 +10,6 @@ from objective import cox_loss
 from common_models import * 
 from fusions import * 
 from train import MMDL, test, train 
-from lifelines.utils import concordance_index
-import matplotlib.pyplot as plt
 import pdb 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

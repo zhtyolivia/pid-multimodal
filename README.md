@@ -40,7 +40,7 @@ docker run  --shm-size=2g --gpus all -it --rm -v /:/workspace -v /etc/localtime:
 
 See [this link](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch/tags) for additional information on this docker image. 
 
-Next, navigate to `pid_calculation` and install required packages with this command:
+Next, navigate to `pid_calculation` and install required packages:
 ```
 pip install -r pid_requirement.txt
 ```

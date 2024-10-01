@@ -1,17 +1,11 @@
-import torch
-from torch import nn
 import sys
 import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import argparse 
-
-from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import normalize
 from sklearn.cluster import KMeans
-
 
 def clustering(X, pca=False, n_clusters=20, n_components=5):
     X = np.nan_to_num(X)

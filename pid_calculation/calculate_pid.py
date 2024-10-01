@@ -1,26 +1,12 @@
-import torch
-from torch import nn
 import sys
 import os
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
 import argparse 
-
-from sklearn.manifold import TSNE
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import normalize
-from sklearn.cluster import KMeans
 cwd = os.getcwd()
 print("Current working directory:", cwd)
 sys.path.append(os.getcwd())
 sys.path.append('../PID')
 sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
-from synthetic.supervised_learning import test
-from synthetic.ensemble import test as test_ensemble
-from synthetic.get_data import get_dataloader
 from synthetic.rus import *
-
 from pid_utils import * 
 
 parser = argparse.ArgumentParser()
