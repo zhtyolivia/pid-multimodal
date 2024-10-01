@@ -4,12 +4,18 @@ There has been an increasing interest in combining different modalities such as 
 
 ![pipeline](figures/pipeline.png)
 
+This repository contains the four multimodal medical datasets and code we used in this work. Users can use this repository to calculate PID metrics and run survival anslysis models (linear/nonlinear, single-/multi-modality) with which we assess the consistency between PID metrics and downstream model performance. 
+
 ## Data preparation 
 
-You can download the four multimodal medical datasets used in this study [here](https://drive.google.com/drive/folders/13aZ5mFqh6dB-SVbxolOGTLOcxzYssZmx?usp=sharing). The CSV files include the features and outcomes, and the JSON files contain the data splits used for repeated cross-validation. 
+For all four datasets, the data splits used for repeated cross-validation are provided in the JSON files under the `datasets` directory. Moreover, the prostate T2W-ADC and lung radiopathomic datasets are also provided in CSV format. 
 
-To compute PID metrics and run the models, place the datasets in the `datasets` directory. The file structure is then:
+The lung cancer radiogenomic data was obtained from a study by Grossmann et al. The brain radiogenomic dataset was obtained from the Cancer Imaging Archive and the Cancer Genome Atlas. Please download the features and outcomes using the respective links. Note that for the brain radiogenomic dataset, we did one-hot encoding on categorical radiomic traits, resulting in 20 binary variables.
+
+The resulting file structure is shown below. The following PID calculation and modeling scripts will assume this file structure: 
+
 ```
+pid-multimodal/
   ├── datasets/               
   │   ├── lung_radiopathomic/ 
   │   ├── prostate_t2w_adc/   
@@ -22,6 +28,7 @@ To compute PID metrics and run the models, place the datasets in the `datasets` 
 ```
 
 ## Calculate PID-based metrics 
+
 We adapted the implementation of PID-based metrics for quantifying multimodal interactions from Liang et al. See [this repository](https://github.com/pliang279/PID/tree/1f6e9d09598754f0dcf7d4ce7e7ffe1c377b0035) for further details. 
 
 ### Step 1: Installing required packages 
@@ -48,9 +55,11 @@ python calculate_pid.py --dataset lung_radiopathomic --pca-components 2 --k 3
 
 ## Linear models 
 
+The first type of survival analysis model we have in this study is the linear cox proportional hazards model. This section describes how to run the linear models that we implemented in R. 
+
 ### Step 1: Installing R and RStudio 
 
-We implemented the linear cox models using R. To run those models: 
+To run those models: 
 
 * Install R: https://www.r-project.org/
 
@@ -58,26 +67,33 @@ We implemented the linear cox models using R. To run those models:
 
 ### Step 2: Running linear models 
 
-After installing R and RStudio, launch RStudio and navigate to the `linear_models` directory.
+After installing R and RStudio, launch RStudio. 
 
-In RStudio, run the script in `concat_lung_radiopathomic.R` to run the concatenation-fused model on the lung radiopathomic dataset. The script will install necessary packages and run the model with repeated cross-validation. Similarly, you can run the canonical correlation analysis (CCA)-fused model, unimodal models, and the ensemble model on this dataset with the other three R scripts in the `linear_models` directory. 
+In RStudio, open `concat_lung_radiopathomic.R` in the `linear_models` directory. Then, run the script in this file to run the concatenation-fused model on the lung radiopathomic dataset. The script will install necessary packages, run the model with repeated cross-validation, and print the concordance-index (C-index). 
+
+Similarly, you can run the canonical correlation analysis (CCA)-fused model, unimodal models, and the ensemble model on this dataset with the other three R scripts in the `linear_models` directory. 
 
 ## Nonlinear models 
 
+Aside from linear cox models, we also implemented multi-layer perceptron (MLP) models with with DeepSurv loss as our nonlinear survival analysis model. 
+
 ### Step 1: Installing required  packages
+
 Similar to calculating PID metrics, create a docker container:
+
 ```
 docker run  --shm-size=2g --gpus all -it --rm -v /:/workspace -v /etc/localtime:/etc/localtime:ro nvcr.io/nvidia/pytorch:21.12-py3
 ```
 
 Then, intall the [lifelines package](https://lifelines.readthedocs.io/en/latest/): 
+
 ```
 pip install lifelines 
 ```
 
 ### Step 2: Running nonlinear models 
 
-Next, to perform early fusion on the lung radiopathomic dataset, navigate to `nonlinear_models` and run: 
+Next, to perform early fusion on the lung radiopathomic dataset and obtain the cross-validation C-index of this model, navigate to `nonlinear_models` and run: 
 ```
 CUDA_VISIBLE_DEVICES=0 python early_fusion.py --dataset lung_radiopathomic 
 ```
@@ -94,7 +110,7 @@ CUDA_VISIBLE_DEVICES=0 python ensemble.py --dataset lung_radiopathomic
 
 Finally, to run unimodal models (e.g., the radiomic-only model): 
 ```
-CUDA_VISIBLE_DEVICES=0 unimodal.py --dataset lung_radiopathomic --modality radiomic
+CUDA_VISIBLE_DEVICES=0 python unimodal.py --dataset lung_radiopathomic --modality radiomic
 ```
 
 The same scripts can be used to run the nonlinear models on the other three datasets by specifying dataset name and model hyperparameters. 
