@@ -4,11 +4,11 @@ There has been an increasing interest in combining different modalities such as 
 
 ![pipeline](figures/pipeline.png)
 
-This repository contains the four multimodal medical datasets and code we used in this work. Users can use this repository to calculate PID metrics and run survival anslysis models (linear/nonlinear, single-/multi-modality) with which we assess the consistency between PID metrics and downstream model performance. 
+This repository contains the four multimodal medical datasets and code we used in this work. This README file contains instructions to calculate PID metrics and run survival anslysis models (linear/nonlinear, single-/multi-modality) with which we assess the consistency between PID metrics and downstream model performance. 
 
 ## Data preparation 
 
-For all four datasets, the data splits used for repeated cross-validation are provided in the JSON files under the `datasets` directory. Moreover, the prostate T2W-ADC, lung radiogenomic, and lung radiopathomic datasets are also provided in CSV format. All four datasets can be downloaded [here](https://drive.google.com/drive/folders/13aZ5mFqh6dB-SVbxolOGTLOcxzYssZmx?usp=drive_link). 
+For all four datasets, the data splits used for repeated cross-validation are provided in the JSON files under the `datasets` directory. Moreover, all features and outcomes except the genomic features in the lung radiogenomic dataset are provided in CSV format. The genomic features and everything else can be downloaded [here](https://drive.google.com/drive/folders/13aZ5mFqh6dB-SVbxolOGTLOcxzYssZmx?usp=drive_link). 
 
 If the Google Drive link expires, the lung cancer radiogenomic data was obtain from [the study by Grossmann et al.](https://elifesciences.org/articles/23421#SD1-data) and can be downloaded from [“Download elife-23421-fig2-data1-v3.xlsx”](https://elifesciences.org/download/aHR0cHM6Ly9jZG4uZWxpZmVzY2llbmNlcy5vcmcvYXJ0aWNsZXMvMjM0MjEvZWxpZmUtMjM0MjEtZmlnMi1kYXRhMS12My54bHN4/elife-23421-fig2-data1-v3.xlsx?_hash=ajwj%2BaRcUSWs2V6zttrMoxgvjg4e5WeC7Lm44YUUhGk%3D) and [“Download elife-23421-fig2-data2-v3.xlsx”](https://elifesciences.org/download/aHR0cHM6Ly9jZG4uZWxpZmVzY2llbmNlcy5vcmcvYXJ0aWNsZXMvMjM0MjEvZWxpZmUtMjM0MjEtZmlnMi1kYXRhMi12My54bHN4/elife-23421-fig2-data2-v3.xlsx?_hash=6Wi512ikLcnfNrGrMP1h02OZRmyyvX00xg5wYCWeScA%3D). The brain radiogenomic dataset was obtained from the Cancer Imaging Archive and the Cancer Genome Atlas, and the features can be downloaded from [the Supplementary Table S1 folder of the study by Smedley et al](https://academic.oup.com/bioinformatics/article/36/11/3537/5758261?login=true#409068263). Note that for the brain radiogenomic dataset, we did one-hot encoding on categorical radiomic traits, resulting in 20 binary variables.
 
@@ -93,7 +93,7 @@ pip install lifelines
 
 ### Step 2: Running nonlinear models 
 
-Next, to perform early fusion on the lung radiopathomic dataset and obtain the cross-validation C-index of this model, navigate to `nonlinear_models` and run: 
+Next, to perform early fusion on the lung radiopathomic dataset and obtain the cross-validation C-index of the early fusion model, navigate to `nonlinear_models` and run: 
 ```
 CUDA_VISIBLE_DEVICES=0 python early_fusion.py --dataset lung_radiopathomic 
 ```
