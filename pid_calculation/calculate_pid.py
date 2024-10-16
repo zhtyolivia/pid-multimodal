@@ -21,7 +21,6 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--data-path", default="../datasets/", type=str, help="Path to here all datasets are located")
 parser.add_argument("--dataset", default="lung_radiopathomic", type=str, 
                     help="Name of the dataset")
-parser.add_argument("--num-bins", default=5, type=int, help="Number of bins for histogram. Should set to cube root of the number of samples")
 parser.add_argument("--pca-components", default=3, type=int, help="Number of PCA components")
 parser.add_argument("--customize-pca", action='store_true') 
 parser.add_argument("--k", default=10, type=int, help="Number of clusters")
