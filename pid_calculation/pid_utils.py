@@ -7,7 +7,7 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import normalize
 from sklearn.cluster import KMeans
 
-def clustering(X, pca=False, n_clusters=20, n_components=5):
+def clustering(X, pca=False, n_clusters=20, n_components=5, random_state=None):
     X = np.nan_to_num(X)
     if len(X.shape) > 2:
         X = X.reshape(X.shape[0],-1)
@@ -15,7 +15,10 @@ def clustering(X, pca=False, n_clusters=20, n_components=5):
         # print(np.any(np.isnan(X)), np.all(np.isfinite(X)))
         X = normalize(X)
         X = PCA(n_components=n_components).fit_transform(X)
-    kmeans = KMeans(n_clusters=n_clusters).fit(X)
+    if not random_state is None: 
+        kmeans = KMeans(n_clusters=n_clusters, random_state=random_state).fit(X)
+    else: 
+        kmeans = KMeans(n_clusters=n_clusters).fit(X)
     return kmeans.labels_, X
 
 def histogram_map_to_bin(number_of_bins, time): 

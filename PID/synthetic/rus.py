@@ -161,11 +161,11 @@ def UI(P, cond_id=0):
 def get_measure(P):
   Q = solve_Q_new(P)
   redundancy = CoI(Q)
-  print('Redundancy', redundancy)
+  # print('Redundancy', redundancy)
   unique_1 = UI(Q, cond_id=1)
-  print('Unique', unique_1)
+  # print('Unique', unique_1)
   unique_2 = UI(Q, cond_id=0)
-  print('Unique', unique_2)
+  # print('Unique', unique_2)
   synergy = CI(P, Q)
-  print('Synergy', synergy)
+  # print('Synergy', synergy)
   return {'redundancy':redundancy, 'unique1':unique_1, 'unique2':unique_2, 'synergy':synergy}
